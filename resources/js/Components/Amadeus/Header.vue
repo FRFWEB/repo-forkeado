@@ -1,64 +1,75 @@
 <script setup>
-import ApplicationLogoWhite from '@/Components/Amadeus/ApplicationLogoWhite.vue';
-import Dropdown from '@/Components/Amadeus/AmadeusDropdown.vue';
-import DropdownLink from '@/Components/Amadeus/AmadeusDropdownLink.vue';
-import { Link } from '@inertiajs/vue3';
-import { permissions } from '@/utils/inertiaUtils';
+import ApplicationLogoWhite from "@/Components/Amadeus/ApplicationLogoWhite.vue";
+import Dropdown from "@/Components/Amadeus/AmadeusDropdown.vue";
+import DropdownLink from "@/Components/Amadeus/AmadeusDropdownLink.vue";
+import { Link } from "@inertiajs/vue3";
+import { permissions } from "@/utils/inertiaUtils";
 
-// Crea un array de notificaciones 
+// Crea un array de notificaciones
 const notifications = [
     {
         id: 1,
         user: {
-            name: 'Dennis',
-            surname: 'Nedry',
-            photo_url: '/storage/sample_avatar.jpeg',
+            name: "Dennis",
+            surname: "Nedry",
+            photo_url: "/storage/sample_avatar.jpeg",
         },
-        action: 'commented',
-        over: 'Calificaciones - Lenguaje Musical',
-        description: 'Lorem ipsum dolor sit amet, consectetur',
-        datetime: '2021/09/01 9:32',
-        model_name: 'califications',
+        action: "commented",
+        over: "Calificaciones - Lenguaje Musical",
+        description: "Lorem ipsum dolor sit amet, consectetur",
+        datetime: "2021/09/01 9:32",
+        model_name: "califications",
     },
     {
         id: 2,
         user: {
-            name: 'Pablo',
-            surname: 'Jiménez',
-            photo_url: '/storage/sample_avatar.jpeg',
+            name: "Pablo",
+            surname: "Jiménez",
+            photo_url: "/storage/sample_avatar.jpeg",
         },
-        action: 'shared',
-        over: 'Concierto de Arte Musical Contemporáneo',
-        datetime: '2021/09/01 9:42',
-        model_name: 'events',
+        action: "shared",
+        over: "Concierto de Arte Musical Contemporáneo",
+        datetime: "2021/09/01 9:42",
+        model_name: "events",
     },
     {
         id: 3,
         user: {
-            name: 'Dennis',
-            surname: 'Nedry',
-            photo_url: '/storage/sample_avatar.jpeg',
+            name: "Dennis",
+            surname: "Nedry",
+            photo_url: "/storage/sample_avatar.jpeg",
         },
-        action: 'commented',
-        over: 'Calificaciones - Lenguaje Musical',
-        description: 'Lorem ipsum dolor sit amet, consectetur',
-        datetime: '2021/09/01 9:42',
-        model_name: 'califications',
+        action: "commented",
+        over: "Calificaciones - Lenguaje Musical",
+        description: "Lorem ipsum dolor sit amet, consectetur",
+        datetime: "2021/09/01 9:42",
+        model_name: "califications",
     },
     {
         id: 4,
         user: {
-            name: 'Pablo',
-            surname: 'Jiménez',
-            photo_url: '/storage/sample_avatar.jpeg',
+            name: "Pablo",
+            surname: "Jiménez",
+            photo_url: "/storage/sample_avatar.jpeg",
         },
-        action: 'shared',
-        over: 'Concierto de Arte Musical Contemporáneo',
-        datetime: '2021/09/01 9:42',
-        model_name: 'events',
+        action: "shared",
+        over: "Concierto de Arte Musical Contemporáneo",
+        datetime: "2021/09/01 9:42",
+        model_name: "events",
     },
 ];
 
+const iconUserName = (name) => {
+    let getFirstChartName = "";
+    let getFirstChartLastName = "";
+    if (name.split(" ").length > 1) {
+        getFirstChartName = name.split(" ")[0].split("")[0];
+        getFirstChartLastName = name.split(" ")[1].split("")[0];
+        return `${getFirstChartName.toUpperCase()}${getFirstChartLastName.toUpperCase()}`;
+    }
+    getFirstChartName = name.split(" ")[0].split("")[0];
+    return `${getFirstChartName.toUpperCase()}${getFirstChartLastName.toUpperCase()}`;
+};
 </script>
 
 <template>
@@ -66,7 +77,7 @@ const notifications = [
         <div class="container-fluid justify-content-xxl-between">
             <div>
                 <Link href="/">
-                    <ApplicationLogoWhite class="logo"/>
+                    <ApplicationLogoWhite class="logo" />
                 </Link>
             </div>
             <div class="nav-items">
@@ -78,10 +89,22 @@ const notifications = [
                                 class="text-light inline-flex items-center leading-4 hover:text-gray-700 focus:outline-none"
                             >
                                 <!-- Icono del usuario -->
-                                <i class="fa-light fa-circle-user icon-size me-2"></i>
+                                <div>
+                                    <span
+                                        class="bg-teal-300 text-dark px-2 mr-4 rounded-full"
+                                        >{{
+                                            iconUserName(
+                                                $page.props.auth.user.name
+                                            )
+                                        }}</span
+                                    >
+                                </div>
+                                <!--  <i
+                                    class="fa-light fa-circle-user icon-size me-2"
+                                ></i> -->
                                 <!-- Nombre del usuario -->
                                 {{ $page.props.auth.user.name }}
-                                
+
                                 <!-- Icono de flecha hacia abajo -->
                                 <svg
                                     class="ml-2 -mr-0.5 h-4 w-4"
@@ -100,25 +123,33 @@ const notifications = [
                     </template>
 
                     <template #content>
-                        <DropdownLink :href="route('profile.edit')"> Perfil </DropdownLink>
-                        <DropdownLink v-if="permissions.includes('school.settings.edit')" :href="route('school.settings.edit')"> Centro </DropdownLink>
+                        <DropdownLink :href="route('profile.edit')">
+                            Perfil
+                        </DropdownLink>
+                        <DropdownLink
+                            v-if="permissions.includes('school.settings.edit')"
+                            :href="route('school.settings.edit')"
+                        >
+                            Centro
+                        </DropdownLink>
                     </template>
                 </Dropdown>
 
-                <Link
+                <!--  <Link
                     :href="route('messaging.show')"
                     as="button">
                     <i class="fa-light fa-message text-light icon-size cursor-pointer"></i>
-                </Link>
+                </Link> -->
 
                 <!-- Notificaciones -->
-                <i class="fa-light fa-bell text-light icon-size cursor-pointer"></i>
+                <i
+                    class="fa-light fa-bell text-light icon-size cursor-pointer"
+                ></i>
 
-                <Link
-                    :href="route('logout')"
-                    method="post"
-                    as="button">
-                    <i class="fa-light fa-arrow-right-from-bracket text-light icon-size"></i>
+                <Link :href="route('logout')" method="post" as="button">
+                    <i
+                        class="fa-light fa-arrow-right-from-bracket text-light icon-size"
+                    ></i>
                 </Link>
             </div>
         </div>
@@ -126,10 +157,8 @@ const notifications = [
 </template>
 
 <style lang="scss" scoped>
-
 .main-container {
-  margin-top: 3vh; /* Ajusta esta altura según el tamaño de tu menú superior */
- 
+    margin-top: 3vh; /* Ajusta esta altura según el tamaño de tu menú superior */
 }
 
 .logo {

@@ -130,6 +130,11 @@ Route::get('/', function () {
     }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+//
+Route::get('/inventory', function () {
+    $frontParams = [];
+    return Inertia::render('Inventory/Show', $frontParams);
+})->middleware(['auth', 'verified'])->name('inventory');
 
 
 // Authentication
