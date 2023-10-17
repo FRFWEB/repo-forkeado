@@ -92,7 +92,6 @@ const submitAddNewItem = () => {
                                         >Tipo de item</label
                                     >
                                     <select
-                                        v-model="item_type"
                                         name=""
                                         id=""
                                         class="w-100 rounded-2xl my-2 border-2 border-blue-500 text-blue-500 text-center"
